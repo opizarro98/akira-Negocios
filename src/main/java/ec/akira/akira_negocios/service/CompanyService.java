@@ -1,8 +1,8 @@
 package ec.akira.akira_negocios.service;
 
-import ec.akira.akira_negocios.model.entity.Companies;
+import ec.akira.akira_negocios.model.entity.Company;
 
 public interface CompanyService {
 
-    Companies createCompany(Companies company);
+    Company createCompany(Company company);
 }
