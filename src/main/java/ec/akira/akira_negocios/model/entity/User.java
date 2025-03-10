@@ -19,10 +19,10 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "user")
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,15 +30,15 @@ public class User extends Auditable {
     @Comment("Identificador del usuario")
     private Long userId;
 
-    @Column(nullable = false, name = "identification", length = 15)
+    @Column(nullable = false, name = "username", length = 15)
     @Comment("Nombre de usuario para el inicio de sesion")
     private String username;
 
-    @Column(nullable = false, name = "first_name", length = 25)
+    @Column(nullable = false, name = "password")
     @Comment("Contrasena del usuario")
     private String password;
 
-    @Column(nullable = true, name = "second_name")
+    @Column(nullable = true, name = "role")
     @Comment("Rol de la persona")
     @Enumerated(EnumType.STRING)
     private RolUserEnum role;
