@@ -1,18 +1,24 @@
 package ec.akira.akira_negocios.model.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.TypePersonEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,5 +79,9 @@ public class Person extends Auditable {
     @Column(nullable = false, name = "total_debt", columnDefinition = "DECIMAL(10,2)")
     @Comment("Total que tiene la persona en debito")
     private BigDecimal totalDebt;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<User> user;
 
 }

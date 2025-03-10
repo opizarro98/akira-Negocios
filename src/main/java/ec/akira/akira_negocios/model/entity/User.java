@@ -2,6 +2,8 @@ package ec.akira.akira_negocios.model.entity;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.RolUserEnum;
 import jakarta.persistence.Column;
@@ -11,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,4 +42,9 @@ public class User extends Auditable {
     @Comment("Rol de la persona")
     @Enumerated(EnumType.STRING)
     private RolUserEnum role;
+
+    @ManyToOne
+    @JoinColumn(name = "personId", nullable = false)
+    @JsonBackReference
+    private Person person;
 }

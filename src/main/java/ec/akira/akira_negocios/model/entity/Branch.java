@@ -2,12 +2,16 @@ package ec.akira.akira_negocios.model.entity;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,5 +42,10 @@ public class Branch extends Auditable {
     @Column(nullable = true, name = "mobile_phone", length = 10)
     @Comment("Numero celular de la sucursal")
     private String mobilePhone;
+
+    @ManyToOne
+    @JoinColumn(name = "companyid", nullable = false)
+    @JsonBackReference
+    private Company company;
 
 }
