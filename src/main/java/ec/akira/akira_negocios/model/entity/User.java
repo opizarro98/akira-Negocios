@@ -3,8 +3,11 @@ package ec.akira.akira_negocios.model.entity;
 import org.hibernate.annotations.Comment;
 
 import ec.akira.akira_negocios.auditable.Auditable;
+import ec.akira.akira_negocios.model.enumEntity.RolUserEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,8 @@ public class User extends Auditable {
     @Comment("Contrasena del usuario")
     private String password;
 
-    @Column(nullable = true, name = "second_name", length = 25)
+    @Column(nullable = true, name = "second_name")
     @Comment("Rol de la persona")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RolUserEnum role;
 }

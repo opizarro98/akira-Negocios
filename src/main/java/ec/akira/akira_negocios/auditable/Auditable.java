@@ -20,14 +20,14 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class Auditable {
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, length = 25)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @CreatedBy
-    @Column(updatable = false)
+    @Column(updatable = false, length = 25)
     private String createdBy;
 
     @LastModifiedBy

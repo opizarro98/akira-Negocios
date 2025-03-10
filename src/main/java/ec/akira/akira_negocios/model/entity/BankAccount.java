@@ -3,8 +3,11 @@ package ec.akira.akira_negocios.model.entity;
 import org.hibernate.annotations.Comment;
 
 import ec.akira.akira_negocios.auditable.Auditable;
+import ec.akira.akira_negocios.model.enumEntity.BankAccountEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +31,8 @@ public class BankAccount extends Auditable {
     @Comment("Numero de cuenta de banco")
     private String accountNumber;
 
-    @Column(name = "type", nullable = false, length = 10)
+    @Column(name = "type", nullable = false)
     @Comment("Tipo de cuenta de banco (Ahorros o Correinte)")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private BankAccountEnum type;
 }

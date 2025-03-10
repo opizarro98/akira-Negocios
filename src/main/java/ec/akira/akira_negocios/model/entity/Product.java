@@ -6,8 +6,11 @@ import java.time.LocalDate;
 import org.hibernate.annotations.Comment;
 
 import ec.akira.akira_negocios.auditable.Auditable;
+import ec.akira.akira_negocios.model.enumEntity.TypeProductEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,33 +37,34 @@ public class Product extends Auditable {
     @Comment("Descripcion del Producto")
     private String description;
 
-    @Column(nullable = false, name = "purchase_price", precision = 10, scale = 2)
+    @Column(nullable = true, name = "purchase_price", columnDefinition = "DECIMAL(10,2)")
     @Comment("Precio de compra del Producto")
     private BigDecimal purchasePrice;
 
-    @Column(nullable = false, name = "retail_price", precision = 10, scale = 2)
+    @Column(nullable = false, name = "retail_price", columnDefinition = "DECIMAL(10,2)")
     @Comment("Precio de venta del Producto")
     private BigDecimal retailPrice;
 
-    @Column(nullable = false, name = "wholesale_price", precision = 10, scale = 2)
+    @Column(nullable = true, name = "wholesale_price", columnDefinition = "DECIMAL(10,2)")
     @Comment("Precio de venta Mayorista del Producto")
     private BigDecimal wholesale_price;
 
-    @Column(nullable = false, name = "expiration_date")
+    @Column(nullable = true, name = "expiration_date")
     @Comment("Fecha de expiracion del Producto")
     private LocalDate expirationDate;
 
-    @Column(nullable = false, name = "image", length = 100)
+    @Column(nullable = true, name = "image", length = 100)
     @Comment("Imagen del Producto")
     private String image;
 
-    @Column(nullable = false, name = "barcode", length = 100, unique = true)
+    @Column(nullable = true, name = "barcode", length = 100, unique = true)
     @Comment("Codigo de barras del Producto")
     private String barcode;
 
     @Column(nullable = false, name = "type", length = 25)
     @Comment("Tipo de Producto (NORMAL, SUBPRODUCTO, COMBO)")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeProductEnum type;
 
     @Column(nullable = false, name = "minimum_stock", length = 25)
     @Comment("Alerta de stock minimo del Producto")
