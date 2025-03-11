@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +29,19 @@ public class ComboProduct extends Auditable {
     @Column(nullable = false)
     @Comment("cantidad de productos en combo")
     private int quantity;
+
+    /*
+     * RELACION DE MUCHOS A UNO CON: PRODUCT
+     */
+    @ManyToOne
+    @JoinColumn(name = "combo_id", nullable = false)
+    private Product comboProduct;
+
+    /*
+     * RELACION DE MUCHOS A UNO CON: PRODUCT
+     */
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
 }

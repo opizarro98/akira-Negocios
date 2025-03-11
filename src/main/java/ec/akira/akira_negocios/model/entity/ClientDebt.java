@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.StatusClientDebEnum;
 import jakarta.persistence.Column;
@@ -14,6 +16,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,4 +45,12 @@ public class ClientDebt extends Auditable {
     @Comment("Estado en el que se encuentra la deuda (PENDIENTE, PAGADO)")
     @Enumerated(EnumType.STRING)
     private StatusClientDebEnum status;
+
+    /*
+     * RELACION MUCHOS A UNO CON: CLIENT
+     */
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    @JsonBackReference
+    private Client client;
 }

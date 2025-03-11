@@ -1,18 +1,27 @@
 package ec.akira.akira_negocios.model.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.StatusEmployee;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,4 +54,27 @@ public class Employee extends Auditable {
     @Comment("Estado del empleado")
     @Enumerated(EnumType.STRING)
     private StatusEmployee status;
+
+    /*
+     * RELACION MUCHOS A UNO CON: PERSON
+     */
+    @ManyToOne
+    @JoinColumn(name = "personId", nullable = false)
+    @JsonBackReference
+    private Person person;
+
+    /*
+     * RELACION UNO A MUCHOS CON: SALE
+     */
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Sale> sales;
+
+    /*
+     * RELACION UNO A MUCHOS CON: USER
+     */
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<User> users;
+
 }

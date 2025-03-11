@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +28,18 @@ public class SubProduct extends Auditable {
     @Column(nullable = false, name = "quantity_per_parent")
     @Comment("Cantidad de productos padredel subproducto")
     private int quantityPerParent;
+
+    /*
+     * RELACION DE MUCHOS A UNO CON: PRODUCT
+     */
+    @ManyToOne
+    @JoinColumn(name = "parent_product_id", nullable = false)
+    private Product parentProduct;
+
+    /*
+     * RELACION DE MUCHOS A UNO CON: PRODUCT
+     */
+    @ManyToOne
+    @JoinColumn(name = "child_product_id", nullable = false)
+    private Product childProduct;
 }

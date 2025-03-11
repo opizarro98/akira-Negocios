@@ -1,13 +1,23 @@
 package ec.akira.akira_negocios.model.entity;
 
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,4 +32,27 @@ public class Client extends Auditable {
     @Column(name = "client_id")
     @Comment("Identificador de cliente")
     private Long clientId;
+
+    /*
+     * RELACION MUCHOS A UNO CON: PERSON
+     */
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    @JsonBackReference
+    private Person person;
+
+    /*
+     * RELACION DE UNO A MUCHO CON: SALE
+     */
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Sale> sales;
+
+    /*
+     * RELACION DE UNO A MUCHO CON: CLIENT_DEBT
+     */
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ClientDebt> clientDebts;
+
 }

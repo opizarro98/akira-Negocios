@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.TypeInventoryMovementEnum;
 import jakarta.persistence.Column;
@@ -13,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,4 +48,28 @@ public class InventoryMovement extends Auditable {
     @Column(nullable = false, name = "reason")
     @Comment("Razon por la que se realiza el movimiento")
     private String reason;
+
+    /*
+     * RELACION MUCHOS A UNO CON: PRODUCT
+     */
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference
+    private Product product;
+
+    /*
+     * RELACION MUCHOS A UNO CON: USER
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
+    /*
+     * RELACION MUCHOS A UNO CON: USER
+     */
+    @ManyToOne
+    @JoinColumn(name = "branch_id", nullable = false)
+    @JsonBackReference
+    private Branch branch;
 }

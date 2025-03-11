@@ -80,8 +80,25 @@ public class Person extends Auditable {
     @Comment("Total que tiene la persona en debito")
     private BigDecimal totalDebt;
 
+    /*
+     * RELACION UNO A MUCHOS CON: EMPLOYEE
+     */
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<User> user;
+    private List<Employee> employee;
+
+    /*
+     * RELACION UNO A MUCHOS CON: SUPPLIER
+     */
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Supplier> supplier;
+
+    /*
+     * RELACION UNO A MUCHOS CON: CLIENT
+     */
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Client> client;
 
 }
