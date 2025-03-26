@@ -8,4 +8,5 @@ import ec.akira.akira_negocios.model.entity.Person;
 @Repository
 public interface PersonRepo extends JpaRepository<Person, Long> {
 
+    Person findByIdentification(String identification);
 }

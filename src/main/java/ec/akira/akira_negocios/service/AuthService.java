@@ -1,12 +1,12 @@
 package ec.akira.akira_negocios.service;
 
 import ec.akira.akira_negocios.model.dto.AuthResponse;
-import ec.akira.akira_negocios.model.dto.LoginRequest;
-import ec.akira.akira_negocios.model.dto.RegisterRequest;
+import ec.akira.akira_negocios.model.dto.LoginResponse;
+import ec.akira.akira_negocios.model.dto.RegisterResponse;
 
 public interface AuthService {
-    AuthResponse login(LoginRequest request);
+    AuthResponse login(LoginResponse request);
 
-    AuthResponse register(RegisterRequest request);
+    AuthResponse register(RegisterResponse request);
 
 }
