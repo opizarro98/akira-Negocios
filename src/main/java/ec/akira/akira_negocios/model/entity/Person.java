@@ -20,12 +20,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "person")
 public class Person extends Auditable {
 
@@ -55,11 +61,11 @@ public class Person extends Auditable {
     @Comment("Segundo apellido de la persona")
     private String secondLastName;
 
-    @Column(nullable = false, name = "landline_phone", length = 10)
+    @Column(nullable = true, name = "landline_phone", length = 10)
     @Comment("Telefono convencional de la persona")
     private String landlinePhone;
 
-    @Column(nullable = false, name = "mobile_phone", length = 10)
+    @Column(nullable = true, name = "mobile_phone", length = 10)
     @Comment("Telefono celular de la persona")
     private String mobilePhone;
 
@@ -76,7 +82,7 @@ public class Person extends Auditable {
     @Enumerated(EnumType.STRING)
     private TypePersonEnum type;
 
-    @Column(nullable = false, name = "total_debt", columnDefinition = "DECIMAL(10,2)")
+    @Column(nullable = true, name = "total_debt", columnDefinition = "DECIMAL(10,2)")
     @Comment("Total que tiene la persona en debito")
     private BigDecimal totalDebt;
 

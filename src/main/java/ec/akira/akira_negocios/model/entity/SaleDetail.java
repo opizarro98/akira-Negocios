@@ -35,7 +35,7 @@ public class SaleDetail extends Auditable {
     @Comment("Precion unitario del producto")
     private BigDecimal unitPrice;
 
-    @Column(nullable = false, name = "discount", columnDefinition = "DECIMAL(10,2) DEFAULT 0.0")
+    @Column(nullable = false, name = "discount", columnDefinition = "DECIMAL(10,2)")
     @Comment("Descuento individual del producto")
     private BigDecimal discount;
 

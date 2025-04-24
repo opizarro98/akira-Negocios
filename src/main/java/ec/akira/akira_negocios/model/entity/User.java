@@ -63,7 +63,7 @@ public class User extends Auditable implements UserDetails {
      * RELACION MUCHO A UNO CON: EMPLOYEE
      */
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = true)
     @JsonBackReference
     private Employee employee;
 
@@ -71,7 +71,7 @@ public class User extends Auditable implements UserDetails {
      * RELACION MUCHO A UNO CON: BRANCH
      */
     @ManyToOne
-    @JoinColumn(name = "branch_id", nullable = false)
+    @JoinColumn(name = "branch_id", nullable = true)
     @JsonBackReference
     private Branch branch;
 

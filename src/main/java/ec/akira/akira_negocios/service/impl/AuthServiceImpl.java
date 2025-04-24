@@ -1,7 +1,5 @@
 package ec.akira.akira_negocios.service.impl;
 
-import java.time.LocalDate;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +14,6 @@ import ec.akira.akira_negocios.model.dto.RegisterResponse;
 import ec.akira.akira_negocios.model.entity.Employee;
 import ec.akira.akira_negocios.model.entity.Person;
 import ec.akira.akira_negocios.model.entity.User;
-import ec.akira.akira_negocios.model.enumEntity.StatusEmployee;
-import ec.akira.akira_negocios.repository.EmployeeRepo;
 import ec.akira.akira_negocios.repository.PersonRepo;
 import ec.akira.akira_negocios.repository.UserRepo;
 import ec.akira.akira_negocios.service.AuthService;
@@ -29,7 +25,6 @@ public class AuthServiceImpl implements AuthService {
 
         private final UserRepo userRepository;
         private final PersonRepo personRepository;
-        private final EmployeeRepo employeeRepository;
         private final JwtService jwtService;
         private final PasswordEncoder passwordEncoder;
         private final AuthenticationManager authenticationManager;
@@ -61,23 +56,21 @@ public class AuthServiceImpl implements AuthService {
         @Override
         public AuthResponse register(RegisterResponse registerResponse) {
 
-                Person person = personRepository.findByIdentification(registerResponse.getPerson().getIdentification());
-
-                Employee employee = Employee.builder()
-                                .position(registerResponse.getEmployee().getPosition())
-                                .salary(registerResponse.getEmployee().getSalary())
-                                .hireDate(LocalDate.now())
-                                .status(StatusEmployee.ACTIVO)
-                                .person(person)
+                Person person = Person.builder()
+                                .identification(registerResponse.getIdentification())
+                                .firstName(registerResponse.getFirstname())
+                                .lastName(registerResponse.getLastname())
+                                .mobilePhone(registerResponse.getMobilePhone())
+                                .email(registerResponse.getEmail())
+                                .type(registerResponse.getTypePerson())
+                                .address(registerResponse.getAddress())
                                 .build();
 
-                employeeRepository.save(employee);
+                personRepository.save(person);
 
                 User user = User.builder()
-                                .username(registerResponse.getUser().getUsername())
-                                .password(passwordEncoder.encode(registerResponse.getUser().getPassword()))
-                                .role(registerResponse.getUser().getRole())
-                                .employee(employee)
+                                .username(registerResponse.getUsername())
+                                .password(passwordEncoder.encode(registerResponse.getPassword()))
                                 .build();
 
                 userRepository.save(user);
