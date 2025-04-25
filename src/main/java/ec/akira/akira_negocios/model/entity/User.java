@@ -9,22 +9,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ec.akira.akira_negocios.auditable.Auditable;
 import ec.akira.akira_negocios.model.enumEntity.RolUserEnum;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +42,7 @@ public class User extends Auditable implements UserDetails {
     @Comment("Identificador del usuario")
     private Long userId;
 
-    @Column(nullable = false, name = "username", length = 15)
+    @Column(nullable = false, name = "username", length = 100)
     @Comment("Nombre de usuario para el inicio de sesion")
     private String username;
 

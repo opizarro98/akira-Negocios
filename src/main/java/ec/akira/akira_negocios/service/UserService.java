@@ -1,8 +1,8 @@
 package ec.akira.akira_negocios.service;
 
-import ec.akira.akira_negocios.model.entity.User;
+import ec.akira.akira_negocios.model.dto.user.UserResponse;
 
 public interface UserService {
 
-    User CreateNewUser(User user);
+    UserResponse createNewUser(UserResponse user);
 }

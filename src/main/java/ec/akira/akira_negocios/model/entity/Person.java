@@ -1,6 +1,7 @@
 package ec.akira.akira_negocios.model.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.annotations.Comment;
@@ -76,6 +77,10 @@ public class Person extends Auditable {
     @Column(nullable = false, name = "address", length = 100)
     @Comment("Direccion del domicilio de la persona")
     private String address;
+
+    @Column(nullable = false, name = "birth_date", length = 50)
+    @Comment("Fecha de nacimiento de la persona")
+    private LocalDate birthDate;
 
     @Column(nullable = false, name = "type")
     @Comment("Tipo de persona")

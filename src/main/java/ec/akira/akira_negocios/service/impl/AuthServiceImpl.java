@@ -2,8 +2,8 @@ package ec.akira.akira_negocios.service.impl;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,29 +32,26 @@ public class AuthServiceImpl implements AuthService {
 
         @Override
         public AuthResponse login(LoginResponse loginResponse) {
-                authenticationManager.authenticate(
-                                new UsernamePasswordAuthenticationToken(
-                                                loginResponse.getUsername(), loginResponse.getPassword()));
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        loginResponse.getUsername(), loginResponse.getPassword()));
 
-                User user = userRepository.findByUsername(loginResponse.getUsername())
-                                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+                        User user = userRepository.findByUsername(loginResponse.getUsername())
+                                        .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-                /*
-                 * Employee employee = user.getEmployee();
-                 * Person person = (employee != null) ? employee.getPerson() : null;
-                 * 
-                 * 
-                 * String personName = (person != null)
-                 * ? person.getFirstName() + " " + person.getLastName()
-                 * : "Usuario sin persona asociada";
-                 */
+                        String token = jwtService.getToken(user);
 
-                String token = jwtService.getToken((UserDetails) user);
+                        return AuthResponse.builder()
+                                        .token(token)
+                                        .build();
 
-                return AuthResponse.builder()
-                                .token(token)
-                                // .userName(personName)
-                                .build();
+                } catch (BadCredentialsException e) {
+                        throw new BadCredentialsException(
+                                        "Credenciales incorrectas. Verifica tu usuario y contraseña.");
+                } catch (UsernameNotFoundException e) {
+                        throw new UsernameNotFoundException("El usuario no existe.");
+                }
         }
 
         @Transactional
@@ -62,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
         public AuthResponse register(RegisterResponse registerResponse) {
                 try {
                         if (userRepository.existsByUsername(registerResponse.getUsername())) {
-                                throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
+                                throw new IllegalArgumentException("El nombre de usuario no esta disponible");
                         }
 
                         Person person = Person.builder()
@@ -71,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
                                         .lastName(registerResponse.getLastname())
                                         .mobilePhone(registerResponse.getMobilePhone())
                                         .email(registerResponse.getEmail())
+                                        .birthDate(registerResponse.getBirthdate())
                                         .type(registerResponse.getTypePerson())
                                         .address(registerResponse.getAddress())
                                         .build();
