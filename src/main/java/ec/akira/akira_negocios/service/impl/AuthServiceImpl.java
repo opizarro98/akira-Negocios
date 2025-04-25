@@ -1,5 +1,6 @@
 package ec.akira.akira_negocios.service.impl;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +12,12 @@ import ec.akira.akira_negocios.config.JwtService;
 import ec.akira.akira_negocios.model.dto.AuthResponse;
 import ec.akira.akira_negocios.model.dto.LoginResponse;
 import ec.akira.akira_negocios.model.dto.RegisterResponse;
-import ec.akira.akira_negocios.model.entity.Employee;
 import ec.akira.akira_negocios.model.entity.Person;
 import ec.akira.akira_negocios.model.entity.User;
 import ec.akira.akira_negocios.repository.PersonRepo;
 import ec.akira.akira_negocios.repository.UserRepo;
 import ec.akira.akira_negocios.service.AuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,49 +39,66 @@ public class AuthServiceImpl implements AuthService {
                 User user = userRepository.findByUsername(loginResponse.getUsername())
                                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-                Employee employee = user.getEmployee();
-                Person person = (employee != null) ? employee.getPerson() : null;
-
-                String personName = (person != null)
-                                ? person.getFirstName() + " " + person.getLastName()
-                                : "Usuario sin persona asociada";
+                /*
+                 * Employee employee = user.getEmployee();
+                 * Person person = (employee != null) ? employee.getPerson() : null;
+                 * 
+                 * 
+                 * String personName = (person != null)
+                 * ? person.getFirstName() + " " + person.getLastName()
+                 * : "Usuario sin persona asociada";
+                 */
 
                 String token = jwtService.getToken((UserDetails) user);
 
                 return AuthResponse.builder()
                                 .token(token)
-                                .userName(personName)
+                                // .userName(personName)
                                 .build();
         }
 
+        @Transactional
         @Override
         public AuthResponse register(RegisterResponse registerResponse) {
+                try {
+                        if (userRepository.existsByUsername(registerResponse.getUsername())) {
+                                throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
+                        }
 
-                Person person = Person.builder()
-                                .identification(registerResponse.getIdentification())
-                                .firstName(registerResponse.getFirstname())
-                                .lastName(registerResponse.getLastname())
-                                .mobilePhone(registerResponse.getMobilePhone())
-                                .email(registerResponse.getEmail())
-                                .type(registerResponse.getTypePerson())
-                                .address(registerResponse.getAddress())
-                                .build();
+                        Person person = Person.builder()
+                                        .identification(registerResponse.getIdentification())
+                                        .firstName(registerResponse.getFirstname())
+                                        .lastName(registerResponse.getLastname())
+                                        .mobilePhone(registerResponse.getMobilePhone())
+                                        .email(registerResponse.getEmail())
+                                        .type(registerResponse.getTypePerson())
+                                        .address(registerResponse.getAddress())
+                                        .build();
 
-                personRepository.save(person);
+                        personRepository.save(person);
 
-                User user = User.builder()
-                                .username(registerResponse.getUsername())
-                                .password(passwordEncoder.encode(registerResponse.getPassword()))
-                                .build();
+                        User user = User.builder()
+                                        .username(registerResponse.getUsername())
+                                        .password(passwordEncoder.encode(registerResponse.getPassword()))
+                                        .role(registerResponse.getRolUser())
+                                        .person(person)
+                                        .build();
 
-                userRepository.save(user);
+                        userRepository.save(user);
 
-                String token = jwtService.getToken((UserDetails) user);
+                        String token = jwtService.getToken(user);
 
-                return AuthResponse.builder()
-                                .token(token)
-                                .userName(person.getFirstName() + " " + person.getLastName())
-                                .build();
+                        return AuthResponse.builder()
+                                        .token(token)
+                                        .build();
+
+                } catch (DataIntegrityViolationException e) {
+                        throw new RuntimeException("Error de integridad de datos al registrar usuario o persona: "
+                                        + e.getMessage());
+                } catch (Exception e) {
+                        throw new RuntimeException("Error al registrar usuario: " + e.getMessage());
+                }
+
         }
 
 }

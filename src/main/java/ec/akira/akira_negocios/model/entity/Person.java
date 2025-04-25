@@ -87,11 +87,11 @@ public class Person extends Auditable {
     private BigDecimal totalDebt;
 
     /*
-     * RELACION UNO A MUCHOS CON: EMPLOYEE
+     * RELACION UNO A MUCHOS CON: USER
      */
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<Employee> employee;
+    private List<User> users;
 
     /*
      * RELACION UNO A MUCHOS CON: SUPPLIER

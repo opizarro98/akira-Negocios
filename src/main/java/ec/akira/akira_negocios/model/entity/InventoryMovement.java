@@ -61,9 +61,9 @@ public class InventoryMovement extends Auditable {
      * RELACION MUCHOS A UNO CON: USER
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = false)
     @JsonBackReference
-    private User user;
+    private Employee employee;
 
     /*
      * RELACION MUCHOS A UNO CON: USER

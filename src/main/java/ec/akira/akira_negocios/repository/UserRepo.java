@@ -20,4 +20,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE User u SET u.username = :username, u.password = :password WHERE u.userId = :id")
     void updateUser(@Param("id") Long id, @Param("username") String username, @Param("password") String password);
+
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.username = :username")
+    boolean existsByUsername(@Param("username") String username);
 }

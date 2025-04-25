@@ -1,5 +1,6 @@
 package ec.akira.akira_negocios.model.dto;
 
+import ec.akira.akira_negocios.model.enumEntity.RolUserEnum;
 import ec.akira.akira_negocios.model.enumEntity.TypePersonEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +21,5 @@ public class RegisterResponse {
     private String identification;
     private String mobilePhone;
     private String address;
-    private String branch_id;
+    private RolUserEnum rolUser;
 }

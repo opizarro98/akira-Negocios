@@ -58,14 +58,6 @@ public class Employee extends Auditable {
     private StatusEmployee status;
 
     /*
-     * RELACION MUCHOS A UNO CON: PERSON
-     */
-    @ManyToOne
-    @JoinColumn(name = "personId", nullable = false)
-    @JsonBackReference
-    private Person person;
-
-    /*
      * RELACION UNO A MUCHOS CON: SALE
      */
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -73,10 +65,18 @@ public class Employee extends Auditable {
     private List<Sale> sales;
 
     /*
-     * RELACION UNO A MUCHOS CON: USER
+     * RELACION DE UNO A MUCHO CON: Inventory_Movement
      */
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<User> users;
+    private List<InventoryMovement> inventoryMovements;
+
+    /*
+     * RELACION MUCHO A UNO CON: BRANCH
+     */
+    @ManyToOne
+    @JoinColumn(name = "branch_id", nullable = true)
+    @JsonBackReference
+    private Branch branch;
 
 }

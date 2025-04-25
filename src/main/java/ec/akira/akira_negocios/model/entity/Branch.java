@@ -50,11 +50,11 @@ public class Branch extends Auditable {
     private String mobilePhone;
 
     /*
-     * RELACION UNO A MUCHOS CON: USER
+     * RELACION UNO A MUCHOS CON: EMPLOYEE
      */
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<User> user;
+    private List<Employee> employee;
 
     /*
      * RELACION MUCHOS A UNO CON: COMPANY

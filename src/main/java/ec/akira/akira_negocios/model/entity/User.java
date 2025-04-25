@@ -54,33 +54,18 @@ public class User extends Auditable implements UserDetails {
     @Comment("Contrasena del usuario")
     private String password;
 
-    @Column(nullable = true, name = "role")
+    @Column(nullable = false, name = "role")
     @Comment("Rol de la persona")
     @Enumerated(EnumType.STRING)
     private RolUserEnum role;
 
     /*
-     * RELACION MUCHO A UNO CON: EMPLOYEE
+     * RELACION MUCHO A UNO CON: PERSON
      */
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = true)
+    @JoinColumn(name = "person_id", nullable = true)
     @JsonBackReference
-    private Employee employee;
-
-    /*
-     * RELACION MUCHO A UNO CON: BRANCH
-     */
-    @ManyToOne
-    @JoinColumn(name = "branch_id", nullable = true)
-    @JsonBackReference
-    private Branch branch;
-
-    /*
-     * RELACION DE UNO A MUCHO CON: Inventory_Movement
-     */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<InventoryMovement> inventoryMovements;
+    private Person person;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

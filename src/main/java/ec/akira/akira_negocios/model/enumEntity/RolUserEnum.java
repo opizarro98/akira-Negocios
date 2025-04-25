@@ -3,5 +3,6 @@ package ec.akira.akira_negocios.model.enumEntity;
 public enum RolUserEnum {
     ADMINISTRADOR,
     VENDEDOR,
-    BODEGUERO
+    BODEGUERO,
+    CLIENT_PORTAL_USER
 }

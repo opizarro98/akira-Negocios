@@ -97,7 +97,7 @@ public class Sale extends Auditable {
      * RELACION DE MUCHOS A UNO CON: EMPLOYEE
      */
     @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
+    @JoinColumn(name = "sales_id", nullable = false)
     @JsonBackReference
     private Employee employee;
 }
