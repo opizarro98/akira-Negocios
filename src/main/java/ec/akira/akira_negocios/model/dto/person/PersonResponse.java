@@ -1,6 +1,7 @@
 package ec.akira.akira_negocios.model.dto.person;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import ec.akira.akira_negocios.model.entity.Client;
@@ -28,6 +29,7 @@ public class PersonResponse {
     private String landlinePhone;
     private String mobilePhone;
     private String email;
+    private LocalDate birthDate;
     private String address;
     private TypePersonEnum typePerson;
     private BigDecimal totalDebt;

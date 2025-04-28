@@ -3,7 +3,7 @@ package ec.akira.akira_negocios.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.akira.akira_negocios.model.dto.user.UserResponse;
+import ec.akira.akira_negocios.model.dto.user.ClientResgisterResponse;
 import ec.akira.akira_negocios.service.UserService;
 import ec.akira.akira_negocios.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/createNewUser")
-    public ResponseEntity<UserResponse> CreateNewUser(@RequestBody UserResponse user) {
+    public ResponseEntity<ClientResgisterResponse> CreateNewUser(@RequestBody ClientResgisterResponse user) {
         return ResponseEntity.ok().body(userService.createNewUser(user));
     }
 

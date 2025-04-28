@@ -11,49 +11,62 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class) // Captura cualquier excepción
-    public ResponseEntity<ApiErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
-        String endpoint = request.getDescription(false).replace("uri=", "");
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ApiErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
+                String endpoint = request.getDescription(false).replace("uri=", "");
 
-        ApiErrorResponse errorResponse = new ApiErrorResponse(
-                endpoint,
-                ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value());
+                ApiErrorResponse errorResponse = new ApiErrorResponse(
+                                endpoint,
+                                ex.getMessage(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.value());
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+                return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
-            WebRequest request) {
-        String endpoint = request.getDescription(false).replace("uri=", "");
-        ApiErrorResponse errorResponse = new ApiErrorResponse(
-                endpoint,
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
+                        WebRequest request) {
+                String endpoint = request.getDescription(false).replace("uri=", "");
+                ApiErrorResponse errorResponse = new ApiErrorResponse(
+                                endpoint,
+                                ex.getMessage(),
+                                HttpStatus.BAD_REQUEST.value());
+                return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex,
-            WebRequest request) {
-        String endpoint = request.getDescription(false).replace("uri=", "");
-        ApiErrorResponse errorResponse = new ApiErrorResponse(
-                endpoint,
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
+        @ExceptionHandler(UsernameNotFoundException.class)
+        public ResponseEntity<ApiErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex,
+                        WebRequest request) {
+                String endpoint = request.getDescription(false).replace("uri=", "");
+                ApiErrorResponse errorResponse = new ApiErrorResponse(
+                                endpoint,
+                                ex.getMessage(),
+                                HttpStatus.NOT_FOUND.value());
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex,
-            WebRequest request) {
-        String endpoint = request.getDescription(false).replace("uri=", "");
-        ApiErrorResponse errorResponse = new ApiErrorResponse(
-                endpoint,
-                "Credenciales incorrectas. Verifica tu usuario y contraseña.",
-                HttpStatus.UNAUTHORIZED.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-    }
+        @ExceptionHandler(BadCredentialsException.class)
+        public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex,
+                        WebRequest request) {
+                String endpoint = request.getDescription(false).replace("uri=", "");
+                ApiErrorResponse errorResponse = new ApiErrorResponse(
+                                endpoint,
+                                "Credenciales incorrectas. Verifica tu usuario y contraseña.",
+                                HttpStatus.UNAUTHORIZED.value());
+                return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        }
+
+        @ExceptionHandler(InvalidTokenException.class)
+        public ResponseEntity<ApiErrorResponse> handleInvalidTokenException(InvalidTokenException ex,
+                        WebRequest request) {
+                String endpoint = request.getDescription(false).replace("uri=", "");
+
+                ApiErrorResponse errorResponse = new ApiErrorResponse(
+                                endpoint,
+                                ex.getMessage(),
+                                HttpStatus.UNAUTHORIZED.value());
+
+                return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        }
 
 }
