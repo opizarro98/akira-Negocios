@@ -1,8 +1,8 @@
 package ec.akira.akira_negocios.service;
 
-import ec.akira.akira_negocios.model.entity.Client;
+import ec.akira.akira_negocios.model.dto.user.ClientResgisterResponse;
 
 public interface ClientService {
 
-    Client createNewClient(Client client);
+    ClientResgisterResponse createNewClientUser(ClientResgisterResponse clientResgisterResponse);
 }
