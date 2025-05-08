@@ -1,5 +1,6 @@
 package ec.akira.akira_negocios.model.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,9 +45,9 @@ public class Employee extends Auditable {
     @Comment("Cargo del empleado")
     private String position;
 
-    @Column(nullable = false, name = "salary", length = 150)
+    @Column(nullable = true, name = "salary", columnDefinition = "DECIMAL(10,2)")
     @Comment("Salario del empleado")
-    private String salary;
+    private BigDecimal salary;
 
     @Column(nullable = false, name = "hire_date", length = 150)
     @Comment("Fecha de contratacion del empleado")
@@ -78,5 +79,13 @@ public class Employee extends Auditable {
     @JoinColumn(name = "branch_id", nullable = true)
     @JsonBackReference
     private Branch branch;
+
+    /*
+     * RELACION MUCHOS A UNO CON: PERSON
+     */
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    @JsonBackReference
+    private Person person;
 
 }

@@ -2,11 +2,6 @@ package ec.akira.akira_negocios.model.dto.person;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-
-import ec.akira.akira_negocios.model.entity.Client;
-import ec.akira.akira_negocios.model.entity.Employee;
-import ec.akira.akira_negocios.model.entity.Supplier;
 import ec.akira.akira_negocios.model.enumEntity.TypePersonEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

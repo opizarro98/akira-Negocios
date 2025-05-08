@@ -1,5 +1,6 @@
 package ec.akira.akira_negocios.model.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.annotations.Comment;
@@ -38,6 +39,18 @@ public class Client extends Auditable {
     @Column(name = "client_id")
     @Comment("Identificador de cliente")
     private Long clientId;
+
+    @Column(nullable = true, name = "credit_limit", columnDefinition = "DECIMAL(10,2)")
+    @Comment("Limite de credito que tiene la persona")
+    private BigDecimal credit_limit;
+
+    @Column(nullable = true, name = "current_debt", columnDefinition = "DECIMAL(10,2)")
+    @Comment("Deuda actual que tiene la persona")
+    private BigDecimal current_debt;
+
+    @Column(nullable = true, name = "total_debt", columnDefinition = "DECIMAL(10,2)")
+    @Comment("Total que tiene la persona en debito")
+    private BigDecimal totalDebt;
 
     /*
      * RELACION MUCHOS A UNO CON: PERSON

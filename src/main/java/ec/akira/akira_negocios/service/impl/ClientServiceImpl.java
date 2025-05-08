@@ -1,61 +1,50 @@
 package ec.akira.akira_negocios.service.impl;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import ec.akira.akira_negocios.model.dto.person.PersonResponse;
-import ec.akira.akira_negocios.model.dto.user.ClientResgisterResponse;
+import ec.akira.akira_negocios.model.dto.registreUser.ClientResgisterResponse;
 import ec.akira.akira_negocios.model.entity.Client;
 import ec.akira.akira_negocios.model.entity.Person;
+import ec.akira.akira_negocios.model.entity.User;
+import ec.akira.akira_negocios.repository.ClientRepo;
+import ec.akira.akira_negocios.repository.PersonRepo;
+import ec.akira.akira_negocios.repository.UserRepo;
 import ec.akira.akira_negocios.service.ClientService;
-import ec.akira.akira_negocios.service.PersonService;
+import ec.akira.akira_negocios.service.mapper.registerclient.PersonUserRegisterMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private final PersonService personService;
+        private final PersonRepo personRepository;
 
-    @Override
-    public ClientResgisterResponse createNewClientUser(ClientResgisterResponse clientResgisterResponse) {
-        // Create person
-        PersonResponse personResponse = PersonResponse.builder()
-                .firstname(clientResgisterResponse.getFirstname())
-                .middleName(clientResgisterResponse.getMiddlename())
-                .lastname(clientResgisterResponse.getLastname())
-                .secondLastName(clientResgisterResponse.getSecondlastname())
-                .email(clientResgisterResponse.getEmail())
-                .birthDate(clientResgisterResponse.getBirthdate())
-                .landlinePhone(clientResgisterResponse.getLandlinephone())
-                .mobilePhone(clientResgisterResponse.getMobilePhone())
-                .address(clientResgisterResponse.getAddress())
-                .typePerson(clientResgisterResponse.getTypePerson())
-                .build();
-        PersonResponse personResponseCreated = personService.createNewPerson(personResponse);
+        private final ClientRepo clientRepository;
 
-        Person person = Person.builder()
-                .identification(personResponseCreated.getIdentification())
-                .firstName(personResponseCreated.getFirstname())
-                .middleName(personResponseCreated.getMiddleName())
-                .lastName(personResponseCreated.getLastname())
-                .secondLastName(personResponseCreated.getSecondLastName())
-                .landlinePhone(personResponseCreated.getLandlinePhone())
-                .mobilePhone(personResponseCreated.getMobilePhone())
-                .email(personResponseCreated.getEmail())
-                .birthDate(personResponseCreated.getBirthDate())
-                .address(personResponseCreated.getAddress())
-                .type(personResponseCreated.getTypePerson())
-                .build();
+        private final UserRepo userRepository;
 
-        // Create USER
+        private final PersonUserRegisterMapper personUserRegisterMapper;
 
-        // Create CLIENT
-        Client client = Client.builder()
-                .person(person)
-                .build();
+        @Override
+        @Transactional
+        public ClientResgisterResponse createNewClient(ClientResgisterResponse clientResgisterResponse) {
 
-        return clientResgisterResponse;
-    }
+                // Create person
+                Person person = personRepository.save(personUserRegisterMapper.toPersonClient(clientResgisterResponse));
+
+                // Create USER
+                User user = personUserRegisterMapper.toUserClient(clientResgisterResponse, person);
+                userRepository.save(user);
+
+                // Create CLIENT
+                Client client = Client.builder()
+                                .person(person)
+                                .build();
+
+                clientRepository.save(client);
+
+                return clientResgisterResponse;
+        }
 
 }

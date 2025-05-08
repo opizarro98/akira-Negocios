@@ -1,9 +1,7 @@
-package ec.akira.akira_negocios.model.dto.user;
+package ec.akira.akira_negocios.model.dto.registreUser;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ec.akira.akira_negocios.model.dto.person.PersonResponse;
 import ec.akira.akira_negocios.model.enumEntity.RolUserEnum;
 import ec.akira.akira_negocios.model.enumEntity.TypePersonEnum;
 import lombok.AllArgsConstructor;
@@ -25,15 +23,14 @@ public class ClientResgisterResponse {
 
     // PERSON
     private String identification;
-    private String firstname;
-    private String middlename;
-    private String lastname;
-    private String secondlastname;
-    private String landlinephone;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String secondLastName;
+    private String landlinePhone;
     private String mobilePhone;
     private String email;
-    private LocalDate birthdate;
+    private LocalDate birthDate;
     private String address;
-    private TypePersonEnum typePerson;
-    private BigDecimal totalDebt;
+    private TypePersonEnum type;
 }

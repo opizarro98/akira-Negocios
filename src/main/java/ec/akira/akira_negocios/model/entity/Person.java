@@ -1,6 +1,5 @@
 package ec.akira.akira_negocios.model.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -87,10 +86,6 @@ public class Person extends Auditable {
     @Enumerated(EnumType.STRING)
     private TypePersonEnum type;
 
-    @Column(nullable = true, name = "total_debt", columnDefinition = "DECIMAL(10,2)")
-    @Comment("Total que tiene la persona en debito")
-    private BigDecimal totalDebt;
-
     /*
      * RELACION UNO A MUCHOS CON: USER
      */
@@ -111,5 +106,12 @@ public class Person extends Auditable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Client> client;
+
+    /*
+     * RELACION UNO A MUCHOS CON: EMPLOYEE
+     */
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Employee> employee;
 
 }

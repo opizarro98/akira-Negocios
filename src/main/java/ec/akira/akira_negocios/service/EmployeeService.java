@@ -1,8 +1,8 @@
 package ec.akira.akira_negocios.service;
 
-import ec.akira.akira_negocios.model.entity.Employee;
+import ec.akira.akira_negocios.model.dto.registreUser.EmployeeRegisterResponse;
 
 public interface EmployeeService {
 
-    Employee createEmployee(Employee employee);
+    EmployeeRegisterResponse createEmployee(EmployeeRegisterResponse employee);
 }
