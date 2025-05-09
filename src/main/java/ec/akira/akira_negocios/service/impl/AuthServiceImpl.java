@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import ec.akira.akira_negocios.config.JwtService;
 import ec.akira.akira_negocios.model.dto.AuthResponse;
 import ec.akira.akira_negocios.model.dto.LoginResponse;
-import ec.akira.akira_negocios.model.dto.registreUser.EmployeeRegisterResponse;
-import ec.akira.akira_negocios.model.entity.Employee;
+import ec.akira.akira_negocios.model.dto.registreUser.ClientResgisterResponse;
+import ec.akira.akira_negocios.model.entity.Client;
 import ec.akira.akira_negocios.model.entity.Person;
 import ec.akira.akira_negocios.model.entity.User;
-import ec.akira.akira_negocios.repository.EmployeeRepo;
+import ec.akira.akira_negocios.repository.ClientRepo;
 import ec.akira.akira_negocios.repository.PersonRepo;
 import ec.akira.akira_negocios.repository.UserRepo;
 import ec.akira.akira_negocios.service.AuthService;
@@ -28,10 +28,10 @@ public class AuthServiceImpl implements AuthService {
 
         private final UserRepo userRepository;
         private final PersonRepo personRepository;
+        private final ClientRepo clientRepository;
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
         private final PersonUserRegisterMapper personUserRegisterMapper;
-        private final EmployeeRepo employeeRepository;
 
         @Override
         public AuthResponse login(LoginResponse loginResponse) {
@@ -59,23 +59,19 @@ public class AuthServiceImpl implements AuthService {
 
         @Transactional
         @Override
-        public AuthResponse register(EmployeeRegisterResponse registerResponse) {
+        public AuthResponse register(ClientResgisterResponse registerResponse) {
                 try {
                         if (userRepository.existsByUsername(registerResponse.getUsername())) {
                                 throw new IllegalArgumentException("El nombre de usuario no esta disponible");
                         }
                         Person person = personRepository
-                                        .save(personUserRegisterMapper.toPersonEmployee(registerResponse));
+                                        .save(personUserRegisterMapper.toPersonClient(registerResponse));
                         User user = userRepository
-                                        .save(personUserRegisterMapper.toUserEmployee(registerResponse, person));
-                        Employee employeeEntity = Employee.builder()
-                                        .position(registerResponse.getPosition())
-                                        .salary(registerResponse.getSalary())
-                                        .hireDate(registerResponse.getHireDate())
-                                        .status(registerResponse.getStatus())
+                                        .save(personUserRegisterMapper.toUserClient(registerResponse, person));
+                        Client client = Client.builder()
                                         .person(person)
                                         .build();
-                        employeeRepository.save(employeeEntity);
+                        clientRepository.save(client);
                         String token = jwtService.getToken(user);
                         return AuthResponse.builder()
                                         .token(token)
@@ -86,7 +82,6 @@ public class AuthServiceImpl implements AuthService {
                 } catch (Exception e) {
                         throw new RuntimeException("Error al registrar usuario: " + e.getMessage());
                 }
-
         }
 
 }

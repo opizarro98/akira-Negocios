@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.akira.akira_negocios.model.dto.AuthResponse;
 import ec.akira.akira_negocios.model.dto.LoginResponse;
-import ec.akira.akira_negocios.model.dto.registreUser.EmployeeRegisterResponse;
+import ec.akira.akira_negocios.model.dto.registreUser.ClientResgisterResponse;
 import ec.akira.akira_negocios.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AuthResponse> register(@RequestBody EmployeeRegisterResponse request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody ClientResgisterResponse request) {
         return ResponseEntity.ok(authService.register(request));
     }
 }
