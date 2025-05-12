@@ -28,7 +28,7 @@ public class PersonController {
         return ResponseEntity.ok().body(person);
     }
 
-    @GetMapping("/searchPersonByIdentification/{identification}")
+    @GetMapping("/personExistByIdentification/{identification}")
     public boolean getMethodName(@PathVariable String identification) {
         return personService.PersonExistsByIdentification(identification);
     }

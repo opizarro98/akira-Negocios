@@ -28,7 +28,9 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers(HttpMethod.GET).permitAll()
                                                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                                                .requestMatchers("/auth/**").permitAll()
+                                                .requestMatchers("/auth/**",
+                                                                "/personRest/searchPersonByIdentification/**")
+                                                .permitAll()
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
