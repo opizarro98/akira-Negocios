@@ -21,7 +21,6 @@ public abstract class PersonUserRegisterMapper {
         User user = User.builder()
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(dto.getRoleUser())
                 .person(person)
                 .build();
         user.setCreatedAt(LocalDateTime.now());
@@ -52,7 +51,6 @@ public abstract class PersonUserRegisterMapper {
         User user = User.builder()
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(dto.getRoleUser())
                 .person(person)
                 .build();
         user.setCreatedAt(LocalDateTime.now());

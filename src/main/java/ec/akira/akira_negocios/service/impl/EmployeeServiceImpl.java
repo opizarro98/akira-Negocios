@@ -34,7 +34,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         userRepository.save(personUserRegisterMapper.toUserEmployee(employee, person));
         // Create EMPLOYEE
         Employee employeeEntity = Employee.builder()
-                .position(employee.getPosition())
                 .salary(employee.getSalary())
                 .hireDate(employee.getHireDate())
                 .status(employee.getStatus())

@@ -41,10 +41,6 @@ public class Employee extends Auditable {
     @Comment("Identificador del empleado")
     private Long employeeId;
 
-    @Column(nullable = false, name = "position", length = 150)
-    @Comment("Cargo del empleado")
-    private String position;
-
     @Column(nullable = true, name = "salary", columnDefinition = "DECIMAL(10,2)")
     @Comment("Salario del empleado")
     private BigDecimal salary;
@@ -87,5 +83,13 @@ public class Employee extends Auditable {
     @JoinColumn(name = "person_id", nullable = false)
     @JsonBackReference
     private Person person;
+
+    /*
+     * RELACION MUCHOS A UNO CON: EMPLOYEE_ROLE
+     */
+    @ManyToOne
+    @JoinColumn(name = "employeeRole_id", nullable = false)
+    @JsonBackReference
+    private EmployeeRole employeeRole;
 
 }

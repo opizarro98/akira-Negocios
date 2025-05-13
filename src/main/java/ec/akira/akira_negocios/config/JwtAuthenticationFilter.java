@@ -54,7 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             userDetails,
                             null,
                             userDetails.getAuthorities());
-
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -69,6 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (SignatureException e) {
             throw new InvalidTokenException("Firma del token no válida", e);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new InvalidTokenException("Token inválido o error de autenticación", e);
         }
 
@@ -78,7 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String getTokenFromRequest(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer")) {
             return authHeader.substring(7);
         }
         return null;
