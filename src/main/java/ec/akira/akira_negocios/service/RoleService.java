@@ -1,7 +1,7 @@
 package ec.akira.akira_negocios.service;
 
-import ec.akira.akira_negocios.model.entity.Role;
+import ec.akira.akira_negocios.model.dto.role.Roledto;
 
 public interface RoleService {
-    Role createRole(Role role);
+    Roledto createRole(Roledto role);
 }

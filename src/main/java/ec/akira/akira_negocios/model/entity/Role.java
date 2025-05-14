@@ -1,17 +1,18 @@
 package ec.akira.akira_negocios.model.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import org.hibernate.annotations.Comment;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
     @Comment("identificador el rol de la persona")
-    private Long role_id;
+    private Long roleId;
 
     @Column(nullable = false, name = "role_name", length = 25)
     @Comment("Nombre del rol")
@@ -37,7 +38,11 @@ public class Role {
     @Comment("Descripcion del rol")
     private String description;
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonBackReference("user-role")
-    private Set<User> users;
+    /*
+     * RELACION UNO A MUCHOS CON: USErROLE
+     */
+    // @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch =
+    // FetchType.EAGER)
+    // @JsonManagedReference
+    // private String userRoles;
 }
